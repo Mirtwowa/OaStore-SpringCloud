@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/OaStore-Gateway/pom.xml" />
         <option value="$PROJECT_DIR$/OaStore-service/pom.xml" />
+        <option value="$PROJECT_DIR$/OaStore-common/pom.xml" />
       </list>
     </option>
   </component>

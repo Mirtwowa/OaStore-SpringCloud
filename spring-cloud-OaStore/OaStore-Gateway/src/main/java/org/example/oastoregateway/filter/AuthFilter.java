@@ -4,11 +4,11 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.extern.slf4j.Slf4j;
-import org.example.oastorecommon.jwt.JWTConstants;
-import org.example.oastorecommon.util.Md5Utils;
-import org.example.oastorecommon.vo.Authority;
-import org.example.oastorecommon.vo.Result;
-import org.example.oastorecommon.vo.UserVo;
+import org.example.common.jwt.JWTConstants;
+import org.example.common.util.Md5Utils;
+import org.example.common.vo.Authority;
+import org.example.common.vo.Result;
+import org.example.common.vo.UserVo;
 import org.example.oastoregateway.config.ExclusionUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -76,7 +76,7 @@ public class AuthFilter implements GlobalFilter , Ordered {
     private Mono<Void> getVoidMono(ServerHttpResponse response, int i, String msg) {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.setStatusCode(HttpStatus.OK);
-        Result failed = Result.failure(i, msg);
+        Result failed = Result.error(i, msg);
         byte[] bits = JSON.toJSONString(failed).getBytes();
         DataBuffer buffer = response.bufferFactory().wrap(bits);
         return response.writeWith(Mono.just(buffer));

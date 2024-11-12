@@ -47,3 +47,4 @@ hystrix:
 exclusion:
   url:
     - /api/login
+    - /aop/**
