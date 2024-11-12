@@ -27,6 +27,7 @@ spring:
       port: 6379
   main:
     web-application-type: reactive
+
 ##############end#####################
 ####超时配置####
 ribbon:
@@ -46,4 +47,3 @@ hystrix:
 exclusion:
   url:
     - /api/login
-
