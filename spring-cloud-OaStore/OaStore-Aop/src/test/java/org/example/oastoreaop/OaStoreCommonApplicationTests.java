@@ -1,4 +1,4 @@
-package org.example.oastorecommon;
+package org.example.oastoreaop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
