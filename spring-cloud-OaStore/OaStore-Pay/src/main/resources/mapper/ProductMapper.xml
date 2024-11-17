@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.oastore.mapper.ProductMapper">
+    <select id="findAll" resultType="org.example.common.vo.Product">
+        SELECT * FROM products;
+    </select>
+
+    <select id="getFoodCourtData" resultType="org.example.common.vo.Product">
+        SELECT * FROM products WHERE category = '食堂';
+    </select>
+
+    <!-- 查询咖啡馆商品数据 -->
+    <select id="getCoffeeShopData" resultType="org.example.common.vo.Product">
+        SELECT * FROM products WHERE category = '咖啡馆';
+    </select>
+
+    <select id="findById" resultType="org.example.common.vo.Product">
+        SELECT * FROM products WHERE id = #{id};
+    </select>
+
+    <!-- 插入商品 -->
+    <insert id="insert" parameterType="org.example.common.vo.Product">
+        INSERT INTO products (name, category, description, price, stock_quantity, status, created_at, updated_at)
+        VALUES (#{name}, #{category}, #{description}, #{price}, #{stockQuantity}, #{status}, NOW(), NOW());
+    </insert>
+
+    <!-- 更新商品 -->
+    <update id="update" parameterType="org.example.common.vo.Product">
+        UPDATE products
+        SET name = #{name}, category = #{category}, description = #{description}, price = #{price},
+            stock_quantity = #{stockQuantity}, status = #{status}, updated_at = NOW()
+        WHERE id = #{id};
+    </update>
+
+    <!-- 删除商品 -->
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM products WHERE id = #{id};
+    </delete>
+</mapper>

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
  * @author tarzan
  */
 @Component("mailService")
-@Slf4j
 public class MailService {
 
 

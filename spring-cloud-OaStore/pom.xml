@@ -13,6 +13,7 @@
         <module>OaStore-gateway</module>
         <module>OaStore-service</module>
         <module>OaStore-common</module>
+        <module>OaStore-Pay</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,15 +1,14 @@
 server:
-  port: 9060
-
+  port: 9050
 spring:
   application:
-    name: api
+    name: pay
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         metadata:
-          application: api
+          application: pay
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -24,11 +23,6 @@ spring:
     redis:
       host: localhost
       port: 6379
-  security:
-    user:
-      name: admin
-      password: 123456
-
 logging:
   level:
     root: INFO

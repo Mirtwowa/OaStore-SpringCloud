@@ -46,5 +46,7 @@ hystrix:
             timeoutInMilliseconds: 600000
 exclusion:
   url:
-    - /api/login
+    - /pay/**
+    - /api/**
     - /aop/**
+

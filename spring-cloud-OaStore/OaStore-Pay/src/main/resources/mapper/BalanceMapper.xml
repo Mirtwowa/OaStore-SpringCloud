@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.oastore.mapper.BalanceMapper">
+    <!-- 更新 general_managers 表的 balance 字段 -->
+    <update id="updateGeneralManagersBalance">
+        UPDATE general_managers
+        SET balance = balance + 50;
+    </update>
+
+    <!-- 更新 department_heads 表的 balance 字段 -->
+    <update id="updateDepartmentHeadsBalance">
+        UPDATE department_heads
+        SET balance = balance + 50;
+    </update>
+
+    <!-- 更新 project_managers 表的 balance 字段 -->
+    <update id="updateProjectManagersBalance">
+        UPDATE project_managers
+        SET balance = balance + 50;
+    </update>
+
+    <!-- 更新 employees 表的 balance 字段 -->
+    <update id="updateEmployeesBalance">
+        UPDATE employees
+        SET balance = balance + 50;
+    </update>
+</mapper>
+
+
