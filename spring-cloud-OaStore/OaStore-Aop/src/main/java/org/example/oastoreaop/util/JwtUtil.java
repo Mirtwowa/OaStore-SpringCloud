@@ -16,8 +16,8 @@ public class JwtUtil {
     // 生成JWT Token
     public static String genToken(Map<String, Object> claims) {
         try {
-            // 设置JWT的有效时间，比如1小时
-            Date expirationTime = new Date(System.currentTimeMillis() + 1000 * 60 * 60);
+            // 设置JWT的有效时间，比如1个月
+            Date expirationTime = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 *30);
 
             // 创建 JWT Claims
             JWTClaimsSet.Builder claimsSetBuilder = new JWTClaimsSet.Builder();

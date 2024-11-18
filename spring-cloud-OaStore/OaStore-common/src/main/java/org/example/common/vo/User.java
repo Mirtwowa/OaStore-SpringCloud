@@ -12,12 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User {
     private Long id;
-    private String username;
-    @JsonIgnore
-    private String password;
+    private Long superiorId;
     private String name;
-    private String userPic;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
-    private String stu_id;
+    private String tel;
+    private String email;
+    private String department;
+    private Float balance;
 }

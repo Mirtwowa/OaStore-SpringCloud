@@ -1,0 +1,20 @@
+schemaName: java
+
+dataSources:
+  ds0:
+    url: jdbc:mysql://localhost:3306/java
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+rules:
+  sharding:
+    tables:
+      employees:
+        actualDataNodes: ds0.employees  # 不进行分片
+      department_heads:
+        actualDataNodes: ds0.department_heads  # 不进行分片
+      general_managers:
+        actualDataNodes: ds0.general_managers  # 不进行分片
+      project_managers:
+        actualDataNodes: ds0.project_managers  # 不进行分片

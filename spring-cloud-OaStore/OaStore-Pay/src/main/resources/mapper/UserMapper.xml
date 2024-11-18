@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oastore.mapper.UserMapper">
+
+    <!-- 扣减用户余额 -->
+    <update id="updateUserBalance" parameterType="map">
+        UPDATE
+        ${tableName}
+        SET balance = balance - #{amount}
+        WHERE id = #{userId}
+    </update>
+
+
+    <!-- 根据用户ID查询用户信息，可能分布在不同的表中 -->
+    <select id="getUser" resultType="org.example.common.vo.User">
+        SELECT * FROM ${tableName} WHERE id = #{userId}
+    </select>
+</mapper>
