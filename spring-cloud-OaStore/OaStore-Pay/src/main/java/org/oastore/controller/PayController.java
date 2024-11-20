@@ -5,6 +5,8 @@ import org.example.common.vo.User;
 import org.oastore.mapper.ProductMapper;
 import org.oastore.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,19 +26,15 @@ public class PayController {
         return productMapper.findAll();
     }
 
-    @PostMapping("/consume")
-    public User consume(Integer userId,Integer productId) {
-        Product amount = productMapper.findById(productId);
-        Map<String,Object> map = new HashMap<>();
-        map.put("userId",userId);
-        map.put("amount",amount.getPrice());
-        userMapper.updateUserBalance(map);
-        String tableName = findTable(userId);
-        return userMapper.getUser(userId,tableName);
-    }
-
     @PostMapping("/getUser")
+    public User consume(Integer userId) {
+        String tableName = findTable(userId);
+        return userMapper.getUser(tableName,userId);
+    }
+    @Transactional
+    @PostMapping("/consume")
     public User getUser(Integer userId,Integer productId) {
+
         Product amount = productMapper.findById(productId);
         String tableName = findTable(userId);
         Map<String,Object> map = new HashMap<>();
@@ -44,7 +42,7 @@ public class PayController {
         map.put("amount",amount.getPrice());
         map.put("tableName",tableName);
         userMapper.updateUserBalance(map);
-        return userMapper.getUser(userId, tableName);
+        return userMapper.getUser(tableName, userId);
     }
     public static String findTable(Integer userId){
         String tableName;
