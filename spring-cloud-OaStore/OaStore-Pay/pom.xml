@@ -8,6 +8,7 @@
         <artifactId>spring-cloud-OaStore</artifactId>
         <version>1.0.0</version>
     </parent>
+    <packaging>jar</packaging>
     <artifactId>OaStore-Pay</artifactId>
     <version>1.0.0</version>
     <name>OaStore-Pay</name>

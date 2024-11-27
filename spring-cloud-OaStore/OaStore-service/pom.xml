@@ -7,6 +7,7 @@
         <artifactId>spring-cloud-OaStore</artifactId>
         <version>1.0.0</version>
     </parent>
+    <packaging>jar</packaging>
     <groupId>org.example</groupId>
     <artifactId>OaStore-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
