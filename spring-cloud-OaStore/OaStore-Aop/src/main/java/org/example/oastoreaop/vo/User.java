@@ -17,6 +17,6 @@ public class User {
     private String name;
     private String userPic;
     private LocalDateTime createTime;
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedAt;
     private String stu_id;
 }

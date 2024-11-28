@@ -18,4 +18,5 @@ public class User {
     private String email;
     private String department;
     private Float balance;
+    private LocalDateTime createdAt;
 }
