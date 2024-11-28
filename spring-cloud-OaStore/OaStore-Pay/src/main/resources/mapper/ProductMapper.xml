@@ -38,4 +38,12 @@
     <delete id="delete" parameterType="Integer">
         DELETE FROM products WHERE id = #{id};
     </delete>
+    <update id="Deduction">
+        UPDATE products
+        SET stock_quantity = IF(stock_quantity > 0, stock_quantity - 1, stock_quantity),
+            status         = IF(stock_quantity = 1, 'unable', #{status}),
+            updated_at     = NOW()
+        WHERE id = #{id};
+    </update>
+
 </mapper>

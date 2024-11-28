@@ -6,7 +6,7 @@
     <update id="updateUserBalance" parameterType="map">
         UPDATE
         ${tableName}
-        SET balance = balance - #{amount}
+        SET balance =IF(balance>=#{amount},balance - #{amount},balance)
         WHERE id = #{userId}
     </update>
 

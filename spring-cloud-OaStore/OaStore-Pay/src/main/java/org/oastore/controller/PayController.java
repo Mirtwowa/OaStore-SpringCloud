@@ -1,6 +1,7 @@
 package org.oastore.controller;
 
 import org.example.common.vo.Product;
+import org.example.common.vo.Result;
 import org.example.common.vo.User;
 import org.oastore.mapper.ProductMapper;
 import org.oastore.mapper.UserMapper;
@@ -64,7 +65,7 @@ public class PayController {
     }
     @Transactional
     @PostMapping("/consume")
-    public User consume(@RequestParam Integer userId, @RequestParam Integer productId) {
+    public Result<Object> consume(@RequestParam Integer userId, @RequestParam Integer productId) {
         // 使用用户ID生成分布式锁的唯一标识
         String lockKey = "user:lock:" + userId;
         RLock lock = redissonClient.getLock(lockKey);
@@ -73,52 +74,51 @@ public class PayController {
             // 尝试获取锁，最多等待5秒，持有时间10秒
             if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
                 // 异步执行余额更新操作
-                CompletableFuture<User> future = CompletableFuture.supplyAsync(() -> {
+                CompletableFuture<Object> future = CompletableFuture.supplyAsync(() -> {
                     // 获取商品信息
                     Product amount = productMapper.findById(productId);
                     if (amount == null) {
                         logger.error("商品不存在！");
                         throw new RuntimeException("商品不存在！");
                     }
-
-                    if (Objects.equals(amount.getCategory(), "0")) {
-                        logger.info("商品售罄！");
-                        throw new RuntimeException("商品已售罄！");
-                    }
-
                     // 确定分表
                     String tableName = findTable(userId);
-
                     // 更新用户余额，调用异步方法
                     Map<String, Object> map = new HashMap<>();
                     map.put("userId", userId);
                     map.put("amount", amount.getPrice());
                     map.put("tableName", tableName);
-
-                    // 更新用户余额
-                    Integer updateResult = userMapper.updateUserBalance(map);
-
-                    // 等待操作结果
-                    // 获取操作返回的结果
-                    if (updateResult == 0) {
-                        logger.error("余额更新失败！");
-                        throw new RuntimeException("余额更新失败！");
-                    }
-
-                    logger.info("支付成功！");
-
-                    // 返回更新后的用户信息
                     User updatedUser = userMapper.getUser(tableName, userId);
                     if (updatedUser == null) {
                         logger.error("用户信息获取失败！");
                         throw new RuntimeException("用户信息获取失败！");
                     }
-
+                    if (amount.getStockQuantity()==0) {
+                        logger.info("商品售罄！");
+                        return Result.error(500,"商品已售罄！");
+                    }
+                    //完成商品数量的扣减
+                    Integer updateResult;
+                    if (productMapper.Deduction(productId) != 0 && updatedUser.getBalance() >= amount.getPrice()) {
+                        // 更新用户余额
+                        updateResult = userMapper.updateUserBalance(map);
+                        // 等待操作结果 获取操作返回的结果
+                        if (updateResult == 0) {
+                            logger.error("余额更新失败！");
+                            throw new RuntimeException("余额更新失败！");
+                        }
+                        logger.info("商品已被购买，库存扣减成功");
+                    } else {
+                        logger.error("余额不足，购买失败");
+                        return Result.error(500,"余额不足，购买失败");
+                    }
+                    logger.info("支付成功！");
+                    // 返回更新后的用户信息
                     return updatedUser;
                 });
 
                 // 同步获取任务执行结果
-                return future.get();  // 阻塞并获取结果
+                return Result.success(future.get());  // 阻塞并获取结果
             } else {
                 logger.error("获取用户锁失败，操作超时");
                 throw new RuntimeException("获取用户锁失败，操作超时");
