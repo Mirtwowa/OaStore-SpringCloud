@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="OaStore-Gateway" />
+        <module name="OaStore-service" />
+        <module name="OaStore-Pay" />
+        <module name="OaStore-aop" />
+        <module name="OaStore-Common" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="OaStore-Common" options="-parameters" />
+      <module name="OaStore-Gateway" options="-parameters" />
+      <module name="OaStore-Pay" options="-parameters" />
+      <module name="OaStore-aop" options="-parameters" />
+      <module name="OaStore-service" options="-parameters" />
+      <module name="spring-cloud-OaStore" options="-parameters" />
+    </option>
+  </component>
+</project>
