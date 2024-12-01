@@ -66,20 +66,17 @@ public class LoginController {
             //生成请求头
             String token = JwtUtil.genToken(claims);
             ValueOperations<String,String> operations = stringRedisTemplate.opsForValue();
-            operations.set(token,token,1, TimeUnit.DAYS);
+            operations.set("AuthKey:"+token,token,1, TimeUnit.DAYS);
             return Result.success(token);
         }
 
         return   Result.error("密码错误");
     }
     @GetMapping("/userinfo")
-    public Result<User> userInfo(){
+    public User userInfo(){
         Map<String,Object> map = ThreadLocalUtil.get();
         String username = (String) map.get("username");
-        Integer id = (Integer) map.get("ID");
-        System.out.println(map);
-        User user = userService.findByUserName(username);
-        return Result.success(user);
+        return userService.findByUserName(username);
     }
     @PostMapping("/resetPwd")
     public Result ResetPwd(String account,String captcha,String newPassword,String userId){
